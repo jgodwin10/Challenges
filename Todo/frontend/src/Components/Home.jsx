@@ -2,7 +2,7 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="max-w-[1000px] mx-auto py-12 shadow-xl px-6 rounded-lg bg-white">
+    <div className="max-w-[1000px] mx-auto py-12 shadow-2xl px-6 rounded-lg bg-white">
       <div>
         <h2 className="text-center text-3xl font-bold">
           Your Ultimate To-Do App
