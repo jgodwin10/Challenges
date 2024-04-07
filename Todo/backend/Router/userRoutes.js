@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { errorHandler } from "../utils/errorHandler";
-import { User } from "../config/db/userModel";
+import { login, register } from "../controller/userController.js";
+import { verifyToken } from "../utils/verifyToken.js";
 
-const router = Router()
+const router = Router();
 
-router.post('/register', register)
+router.post("/register", register, verifyToken);
+router.post("/login", login)
 
-
-export default router
+export default router;
