@@ -33,9 +33,9 @@ export const register = asyncHandler(async (req, res, next) => {
   const user = await User.create({ email, username, password: hashedPassword });
 
   if (user) {
-   const token = generateToken(res, user);
+    const token = generateToken(res, user);
     res.status(201).json({
-        token
+      token,
     });
   } else {
     next(errorHandler(401, "Invalid User"));
@@ -52,10 +52,9 @@ export const login = asyncHandler(async (req, res, next) => {
     const validPassword = bcrypt.compareSync(password, valid.password);
 
     if (valid && validPassword) {
-      generateToken(res, valid);
+      const token = generateToken(res, valid);
       res.status(200).json({
-        _id: valid._id,
-        username: valid.username,
+        token,
       });
     } else {
       throw new Error("Inavlid Credentials");
