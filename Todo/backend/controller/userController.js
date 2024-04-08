@@ -2,7 +2,7 @@ import { User } from "../config/db/userModel.js";
 import bcrypt from "bcryptjs";
 import { errorHandler } from "../utils/errorHandler.js";
 import dotenv from "dotenv";
-import { generateToken } from "../utils/generateToken.js";
+import { generateToken, verifyToken } from "../utils/generateToken.js";
 import asyncHandler from "express-async-handler";
 
 dotenv.config();
@@ -15,17 +15,17 @@ export const register = asyncHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
 
   if (!email || !username || !password) {
-    next(errorHandler(400, "Invalid Input, All Field are required"));
+    return next(errorHandler(400, "Invalid Input, All Field are required"));
   }
 
   const exist = await User.findOne({ email });
   const existUsername = await User.findOne({ username });
 
   if (exist) {
-    next(errorHandler(400, "User existed, Try another Input"));
+    return next(errorHandler(400, "User existed, Try another Input"));
   }
   if (existUsername) {
-    next(errorHandler(400, "User existed, Try another Input"));
+    return next(errorHandler(400, "User existed, Try another Input"));
   }
 
   const hashedPassword = bcrypt.hashSync(password, salt);
@@ -33,12 +33,13 @@ export const register = asyncHandler(async (req, res, next) => {
   const user = await User.create({ email, username, password: hashedPassword });
 
   if (user) {
-    const token = generateToken(res, user);
-    res.status(201).json({
-      token,
-    });
+    const token = generateToken(user);
+    const verified = verifyToken(token)
+    res.status(201).json(
+      token
+    );
   } else {
-    next(errorHandler(401, "Invalid User"));
+    return next(errorHandler(401, "Invalid User"));
   }
 });
 
@@ -52,14 +53,15 @@ export const login = asyncHandler(async (req, res, next) => {
     const validPassword = bcrypt.compareSync(password, valid.password);
 
     if (valid && validPassword) {
-      const token = generateToken(res, valid);
-      res.status(200).json({
-        token,
-      });
+      const token = generateToken(valid);
+      const verified = verifyToken(token)
+      res.status(200).json(
+         token
+      );
     } else {
-      throw new Error("Inavlid Credentials");
+      return next(errorHandler(401, "Inavlid Credentials"));
     }
   } catch (error) {
-    next(errorHandler(401, error));
+   return next(errorHandler(401, "Invalid Credentials"));
   }
 });
