@@ -29,7 +29,7 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-[#c1e3fe] h-[100vh] pt-36">
+    <div className="bg-[#c1e3fe] h-[100vh] pt-20 md:pt-36">
       <div className="max-w-[1000px] mx-auto py-12 px-6 bg-white rounded-lg shadow-2xl">
         <div className="text-center">
           <h2 className="text-4xl font-bold">Login</h2>
