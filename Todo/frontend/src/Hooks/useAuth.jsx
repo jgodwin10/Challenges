@@ -17,11 +17,11 @@ const useAuth = () => {
     if (expire < now) {
       const username = "";
       dispatch(setCredentials(""));
-      console.log(username);
+
       return username;
     } else {
       const { username } = decode;
-      console.log(username);
+
       return { username };
     }
   }

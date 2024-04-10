@@ -1,42 +1,48 @@
 import React from "react";
-import { IoIosAdd } from "react-icons/io";
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import useAuth from "../Hooks/useAuth";
+import { format } from "date-fns";
+import { useDeleteTodoMutation } from "../App/apiSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { changeEdit } from "../App/userSlice";
 
-const Todo = () => {
+const Todo = ({ text, createdAt, _id, input, ID }) => {
+  const [deleteItem] = useDeleteTodoMutation();
+  const edit = useSelector((state) => state.user.edit);
 
- const {username} = useAuth()
+  const dispatch = useDispatch();
 
- console.log(username);
+  const handleDelete = async (e) => {
+    await deleteItem(_id);
+  };
+
+  const handleEdit = () => {
+    input(text);
+    ID(_id);
+    dispatch(changeEdit(true));
+  };
 
   return (
-    <div className="max-w-[1000px] mx-auto px-8 py-12 bg-white rounded-lg shadow-2xl">
-      <h2 className="text-4xl font-bold py-6">Todo App</h2>
-      <div className="flex pb-7">
-        <input
-          className="outline-[#c1e3fe] border border-neutral-500 w-[100%] p-3 rounded-md"
-          placeholder="Add your new todo"
-          type="text"
-        />
-        {/* <div className="bg-[#c1e3fe] ml-3 text-center rounded-md"> */}
-
-        <IoIosAdd className="text-gray-600 cursor-pointer rounded-lg shadow-xl bg-[#c1e3fe] ml-2 size-14" />
-        {/* </div> */}
+    <div className="flex justify-between w-[100%] mb-3 bg-neutral-200 py-3 rounded-md">
+      <div className="md:pl-8 pl-3">
+        <p className="font-semibold text-neutral-600">{text}</p>
+        <p className="text-neutral-500">
+          {format(new Date(createdAt), "h:mm a, MM/dd/yyyy")}
+        </p>
       </div>
-      <div className="flex justify-between w-[100%] bg-neutral-200 py-3 rounded-md">
-        <div className="md:pl-8 pl-5">
-          <p className="font-semibold text-neutral-600">ADD new todo</p>
-          <p className="text-neutral-500">date and time</p>
-        </div>
-        <div className="flex pt-2 pr-4">
-          <span className="bg-white mr-2 h-8 p-2 rounded-md cursor-pointer">
-            <FaTrash className="size-4" />
-          </span>
-          <span className="bg-white h-8 mr-3 p-2 rounded-md cursor-pointer">
-            <FaPen className="size-4" />
-          </span>
-        </div>
+      <div className="flex pt-2 pr-2 md:pr-4">
+        <span
+          onClick={handleDelete}
+          className="bg-white mr-2 h-8 p-2 rounded-md cursor-pointer"
+        >
+          <FaTrash className="size-4" />
+        </span>
+        <span
+          onClick={handleEdit}
+          className="bg-white h-8 md:mr-3 mr-1 p-2 rounded-md cursor-pointer"
+        >
+          <FaPen className="size-4" />
+        </span>
       </div>
     </div>
   );

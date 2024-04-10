@@ -5,7 +5,7 @@ const initialState = {
   token: localStorage.getItem("token")
     ? JSON.parse(localStorage.getItem("token"))
     : "",
-  user: '',
+  edit: false,
 };
 
 
@@ -18,11 +18,15 @@ export const userSlice = createSlice({
       state.token += action.payload;
       localStorage.setItem("token", JSON.stringify(action.payload));
     },
-    setUser: (state, action) => {
-      state.token += action.payload
-    }
+    Logout: (state, action) => {
+      state.token = ''
+      localStorage.removeItem('token')
+    },
+    changeEdit: (state, action) => {
+      state.edit = action.payload
+    },
   },
 });
 
-export const { setCredentials } = userSlice.actions;
+export const { setCredentials, changeEdit, Logout } = userSlice.actions;
 export default userSlice.reducer;

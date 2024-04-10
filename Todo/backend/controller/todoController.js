@@ -26,7 +26,7 @@ export const createTodo = asyncHandler(async (req, res, next) => {
 export const getTodo = asyncHandler(async (req, res, next) => {
   const { user } = req.params;
 
-  const exist = await Todo.find({ username: user });
+  const exist = await Todo.find({ username: user }).sort({ createdAt: -1 });
 
   res.status(200).json(exist);
 });
@@ -40,10 +40,10 @@ export const deleteTodo = asyncHandler(async (req, res) => {
 });
 
 export const updateTodo = asyncHandler(async (req, res) => {
-  const { _id } = req.params;
-  const { text } = req.body;
+ 
+  const { text, id } = req.body;
 
-    const exist = await Todo.findByIdAndUpdate(_id, { text });
+    const exist = await Todo.findByIdAndUpdate(id, { text });
     
     res.send(exist)
 });
