@@ -32,7 +32,7 @@ const Register = () => {
 
   return (
     <div className="max-w-[1000px] mx-auto py-12 px-8 bg-white rounded-lg shadow-2xl">
-      {error}
+      <p>{error}</p>
       <div className="text-center">
         <h2 className="text-4xl font-bold">Sign Up</h2>
         <p className="text-neutral-500 py-4">Create an account, it's free</p>

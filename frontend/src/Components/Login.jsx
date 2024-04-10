@@ -30,7 +30,7 @@ const Login = () => {
   };
   return (
     <div className="bg-[#c1e3fe] h-[100vh] pt-20 md:pt-36">
-       {error}
+      <p>{error}</p>
       <div className="max-w-[1000px] mx-auto py-12 px-6 bg-white rounded-lg shadow-2xl">
         <div className="text-center">
           <h2 className="text-4xl font-bold">Login</h2>
@@ -59,7 +59,10 @@ const Login = () => {
           </label>
         </form>
         <div className="text-center py-4">
-          <button className="bg-[#c1e3fe] hover:bg-white hover:border-2 hover:border-neutral-700 my-6 hover:text-neutral-800 w-[80%] font-semibold py-4 md:w-[40%] rounded-full md:text-xl" onClick={handleSubmit}>
+          <button
+            className="bg-[#c1e3fe] hover:bg-white hover:border-2 hover:border-neutral-700 my-6 hover:text-neutral-800 w-[80%] font-semibold py-4 md:w-[40%] rounded-full md:text-xl"
+            onClick={handleSubmit}
+          >
             Login
           </button>
           <p className="py-2">
