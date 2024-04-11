@@ -6,18 +6,14 @@ import { setCredentials } from "../App/userSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
-  const [login, { isloading, isError, error }] = useLoginMutation();
-  
-  
+  const [login, { isloading }] = useLoginMutation();
+  const [err, setErr] = useState("");
+
   const token = useSelector((state) => state.user.token);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
-  if (isError) {
-    console.log(error.data?.message);
-    return <p>{ error?.error}</p>
-  }
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -29,18 +25,32 @@ const Login = () => {
       dispatch(setCredentials(res));
       setFormData("");
       navigate("/");
+      setErr("");
     } catch (error) {
       console.log(error);
+      setErr(error?.data?.message);
     }
   };
+
+  setTimeout(() => {
+    setErr("");
+  }, 10000);
+
   return (
     <div className="bg-[#c1e3fe] h-[100vh] pt-20 md:pt-36">
-      
       <div className="max-w-[1000px] mx-auto py-12 px-6 bg-white rounded-lg shadow-2xl">
         <div className="text-center">
           <h2 className="text-4xl font-bold">Login</h2>
           <p className="text-neutral-500 py-4">Login to your account</p>
         </div>
+        <p
+          className={`text-center ${
+            err ? "" : "hidden"
+          } bg-red-400 py-4 px-4 transition duration-700 rounded-xl text-white font-semibold text-md`}
+        >
+          {err}
+        </p>
+
         <form className="flex flex-col md:w-[60%] w-[100%] py-8">
           <label className="flex flex-col pb-4" htmlFor="username">
             <span className="text-xl pb-2 text-neutral-600">Username</span>

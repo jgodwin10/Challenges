@@ -6,18 +6,15 @@ import { setCredentials } from "../App/userSlice";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
-  const [register, { isloading,isError, error }] = useRegisterMutation();
+  const [register, { isloading, isError, error }] = useRegisterMutation();
+  const [err, setErr] = useState("");
 
   const token = useSelector((state) => state.user.token);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  if (isError) {
-    console.log(error.data?.message);
-    return <p>{error?.error}</p>;
-  }
-
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -27,20 +24,31 @@ const Register = () => {
     try {
       const res = await register(formData).unwrap();
       dispatch(setCredentials(res));
-      setFormData('')
-      navigate('/')
+      setFormData("");
+      navigate("/");
     } catch (error) {
       console.log(error);
+      setErr(error?.data?.message);
     }
   };
 
+  setTimeout(() => {
+    setErr("");
+  }, 10000);
+
   return (
     <div className="max-w-[1000px] mx-auto py-12 px-8 bg-white rounded-lg shadow-2xl">
-      
       <div className="text-center">
         <h2 className="text-4xl font-bold">Sign Up</h2>
         <p className="text-neutral-500 py-4">Create an account, it's free</p>
       </div>
+      <p
+        className={`text-center ${
+          err ? "" : "hidden"
+        } bg-red-400 py-4 px-4 transition duration-700 rounded-xl text-white font-semibold text-md`}
+      >
+        {err}
+      </p>
       <form className="grid md:grid-cols-2 gap-6 w-[100%] py-8">
         <label className="flex flex-col pb-4" htmlFor="username">
           <span className="text-xl pb-2 text-neutral-600">Username</span>
