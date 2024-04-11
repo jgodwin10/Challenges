@@ -45,7 +45,7 @@ const Login = () => {
           <label className="flex flex-col pb-4" htmlFor="username">
             <span className="text-xl pb-2 text-neutral-600">Username</span>
             <input
-              className="py-4 px-3 border-2 border-neutral-400 rounded-lg outline-[#c1e3fe] bg-white"
+              className="md:py-4 py-2 px-3 border-2 border-neutral-400 rounded-lg outline-[#c1e3fe] bg-white"
               type="text"
               name=""
               id="username"
@@ -55,7 +55,7 @@ const Login = () => {
           <label className="flex flex-col" htmlFor="password">
             <span className="text-xl pb-2 text-neutral-600">Password</span>
             <input
-              className="py-4 px-3 border-2 border-neutral-400 rounded-lg outline-[#c1e3fe] bg-white"
+              className="md:py-4 py-2 px-3 border-2 border-neutral-400 rounded-lg outline-[#c1e3fe] bg-white"
               type="password"
               name=""
               id="password"
