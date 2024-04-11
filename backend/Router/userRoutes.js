@@ -10,11 +10,11 @@ import {
 
 const router = Router();
 
-router.post("/register", register, verifyToken);
-router.post("/login", login);
-router.post("/todo", createTodo);
-router.get("/todo/:user", getTodo);
-router.delete("/todo/:id", deleteTodo);
-router.patch("/todo", updateTodo);
+router.post("/api/register", register);
+router.post("/api/login", login);
+router.post("/api/todo", createTodo);
+router.get("/api/todo/:user", getTodo);
+router.delete("/api/todo/:id", deleteTodo);
+router.patch("/api/todo", updateTodo);
 
 export default router;
