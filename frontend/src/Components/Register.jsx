@@ -15,7 +15,7 @@ const Register = () => {
 
   if (isError) {
     console.log(error.data?.message);
-    return <p>{error.data?.message}</p>;
+    return <p>{error}</p>;
   }
 
   const handleChange = (e) => {
