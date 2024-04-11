@@ -6,13 +6,18 @@ import { setCredentials } from "../App/userSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
-  const [login, { isloading, error }] = useLoginMutation();
-
+  const [login, { isloading, isError, error }] = useLoginMutation();
+  
+  
   const token = useSelector((state) => state.user.token);
-
+  
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
+  
+  if (isError) {
+    console.log(error.data.message);
+    return <p>{ error.data.message}</p>
+  }
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -22,15 +27,15 @@ const Login = () => {
     try {
       const res = await login(formData).unwrap();
       dispatch(setCredentials(res));
-      setFormData('')
-      navigate('/')
+      setFormData("");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <div className="bg-[#c1e3fe] h-[100vh] pt-20 md:pt-36">
-      <p>{error}</p>
+      
       <div className="max-w-[1000px] mx-auto py-12 px-6 bg-white rounded-lg shadow-2xl">
         <div className="text-center">
           <h2 className="text-4xl font-bold">Login</h2>
