@@ -14,7 +14,10 @@ mongoose.connect(process.env.MONGODB).then(() => {
 
 const __dirname = path.resolve();
 
-const corsOptions = "";
+var corsOptions = {
+  origin: "https://challenges-ih81.onrender.com",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) chok
+}
 
 const app = express();
 app.use(cors(corsOptions));
