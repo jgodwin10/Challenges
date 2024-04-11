@@ -14,8 +14,8 @@ const Register = () => {
   const navigate = useNavigate()
 
   if (isError) {
-    console.log(error.data.message);
-    return <p>{error.data.message}</p>;
+    console.log(error.data?.message);
+    return <p>{error.data?.message}</p>;
   }
 
   const handleChange = (e) => {
